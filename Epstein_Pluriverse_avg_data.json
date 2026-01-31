@@ -1,0 +1,48 @@
+{
+  "identity": {
+    "url": "multiple sources",
+    "source": "left",
+    "name": "citizens",
+    "organization": "community group"
+  },
+  "intersection": {
+    "expression": "New York Times columnist David Brooks attended a dinner with Jeffrey Epstein in 2011. TikTok officials say they are looking into why many users have been unable to send the word \"Epstein\" in direct messages. California",
+    "body_experience": "health impact",
+    "intention": "resistance"
+  },
+  "demographic": {
+    "race": "minority",
+    "gender": "unspecified",
+    "education": "traditional knowledge",
+    "occupation": "policy makers",
+    "ability": "able",
+    "wealth": "mixed",
+    "health": "at risk"
+  },
+  "intention": {
+    "autonomy": "externally imposed",
+    "design": "co-created",
+    "future": "New York Times columnist David Brooks attended a dinner with Jeffrey Epstein in 2011. The day before the fatal shooting of Alex Pretti, TikTok users noticed they were unable to post videos that",
+    "new": "social innovation",
+    "symbol": "resistance",
+    "impact": "localized change",
+    "support": "public support"
+  },
+  "policy_critique": {
+    "origin": "community-led",
+    "leak": "resource extraction",
+    "depletion": "social depletion",
+    "obstacles": "political resistance"
+  },
+  "future": {
+    "ritual": "adaptation",
+    "hope": "TikTok is investigating why some users can't send the word \"Epstein\" in direct messages. California Gov. Gavin Newsom announced an inquiry into the",
+    "depict": "transitional"
+  },
+  "meta": {
+    "country": "",
+    "article_count": 15,
+    "method": "most-common categorical + synthesized narrative"
+  }
+}
+

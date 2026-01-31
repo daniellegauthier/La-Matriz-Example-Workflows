@@ -1,0 +1,1492 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>La Matriz</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ===== Brand Tokens (bright earth palette) ===== */
+:root{
+  --olive:#7A8C51;
+  --gold:#D9BA5F;
+  --paper:#F2EBDC;
+  --terra:#BF6849;
+  --rose:#D99E89;
+  --taupe:#A69D85;
+  --brown:#594E39;
+  --ink:#262014;
+
+  --bg: var(--paper);
+  --text: var(--ink);
+  --muted: color-mix(in oklab, var(--ink) 70%, var(--taupe));
+  --accent: var(--olive);
+  --accent-2: var(--gold);
+}
+
+/* ===== Page & print ===== */
+@page{
+  size: 8.5in 11in;            /* US Letter; change to A4 if needed */
+  margin: 1.0in;
+}
+@media print{
+  a[href]:after{ content:""; } /* no URL after links on print */
+}
+
+
+/* ===== Layout ===== */
+*{ box-sizing:border-box; }
+html,body{ height:100%; background:var(--bg); color:var(--text); font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+.wrap{
+  max-width: 7.5in; margin: 0 auto; padding: 0.05in 0;
+  display: grid; gap: .35in;
+}
+
+/* Header */
+.header{
+  display:grid; grid-template-columns:auto 1fr;
+  align-items:center; gap:.3in;
+  border-bottom: 2px solid var(--taupe);
+  padding-bottom: .22in;
+}
+.brand{
+  display:flex; align-items:center; gap:.18in;
+}
+.brand img{ height: .85in; width:auto; display:block; border-radius:8px; }
+.brand h1{
+  font-size: 24px; line-height:1.05; margin:0;
+}
+.brand .tag{ color: var(--muted); font-size: 12.5px; margin-top:2px; }
+.badges{ justify-self:end; display:flex; gap:.12in; align-items:center; }
+.badge{ padding:.08in .16in; border-radius:999px; font-weight:600; font-size:11px; color:var(--ink); background:var(--gold); border:1px solid color-mix(in oklab,var(--gold) 70%,#000); }
+.badge.alt{ background: var(--olive); border-color: color-mix(in oklab,var(--olive) 70%,#000); color: #0f1507; }
+
+/* Hero block */
+.hero{
+  display:grid; gap:.14in;
+  background:
+    radial-gradient(70% 140% at 100% 0%, color-mix(in oklab,var(--gold) 35%, transparent), transparent 60%),
+    radial-gradient(60% 120% at 0% 100%, color-mix(in oklab,var(--olive) 30%, transparent), transparent 60%);
+  border:1.5px solid var(--taupe); border-radius:16px; padding:.28in;
+
+}
+.hero h2{ font-size: 30px; line-height:1.08; margin:0; }
+.hero p{ margin:0; color: var(--muted); }
+
+.color-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.color-list li {
+    position: relative;
+    padding-left: 1.8rem;
+    margin-bottom: 0.6rem;
+    line-height: 1.4;
+}
+
+.color-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.45em;
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    background-color: currentColor;
+}
+
+/* RGB color definitions */
+.grey {
+    color: rgb(170, 170, 170);
+}
+
+.pink {
+    color: rgb(250, 0, 90);
+}
+
+.gold {
+    color: rgb(250, 200, 0);
+}
+
+.nude {
+    color: rgb(250, 180, 120);
+}
+
+.orange {
+    color: rgb(250, 110, 0);
+}
+
+.white {
+    color: rgb(255, 255, 255);
+}
+
+.blue {
+    color: rgb(0, 0, 255);
+}
+
+.green {
+    color: rgb(0, 255, 0);
+}
+
+.red {
+    color: rgb(255, 0, 0);
+}
+
+.black {
+    color: rgb(0, 0, 0);
+}
+
+.brown {
+    color: rgb(180, 50, 0);
+}
+
+.yellow {
+    color: rgb(255, 255, 0);
+}
+
+.purple {
+    color: rgb(180, 50, 255);
+}
+
+
+/* Image grid */
+.grid{
+  display:grid; grid-template-columns: 1fr 1fr 1fr; gap:.18in;
+}
+.fig{
+  border:1.5px solid var(--taupe); border-radius:12px; overflow:hidden; background:#fff;
+  display:grid; gap:6px; padding:8px;
+}
+.fig img{ width:100%; height:100%; object-fit:cover; border-radius:8px; border:1px solid color-mix(in oklab,var(--taupe) 65%, #0000); }
+.fig .cap{ font-size:11.2px; color: var(--brown); line-height:1.25; }
+
+/* Thin row for two smaller visuals */
+.row2{ display:grid; grid-template-columns: 1fr 1fr; gap:.18in; }
+.fig.sm img{ height:1.2in; }
+
+/* Footer/Contact */
+.footer{
+  display:grid; grid-template-columns: 2fr 1fr; gap:.25in; align-items:center;
+  border-top: 2px solid var(--taupe); padding-top:.18in;
+}
+.cta{
+  display:flex; gap:.12in; align-items:center; flex-wrap:wrap;
+}
+.btn{
+  display:inline-block; padding:.1in .2in; border-radius:999px; font-weight:700; font-size:12.5px; text-decoration:none;
+  border:1.5px solid var(--brown); color:#0f1507; background:linear-gradient(90deg,var(--olive),var(--gold));
+}
+.meta{ font-size:12px; color: var(--muted); }
+.small{ font-size:11px; color: var(--brown); }
+  
+.table, th, td {
+  border: 1px solid white;
+  border-collapse: collapse;
+}
+.th, td {
+  background-color: #F2EBDC;
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+  <!-- Header -->
+  <header class="header">
+    <div class="brand">
+      <img src="la matriz root only.png" alt="La Matriz Consulting logo" onerror="this.style.display='none'">
+      <div>
+        <h1>La Matriz</h1>
+        <div class="tag">Semantic Color Math for Decisions and Systems</div>
+      </div>
+    </div>
+    <div class="badges">
+      <span class="badge">Natural Language Processing</span>
+      <span class="badge alt">Feedback Loops</span>
+    </div>
+  </header>
+  
+  
+   <!-- Hero -->
+  <section class="hero">
+    <h2>Welcome</h2>
+    <p>
+    Risky behavior is framed as individual failure. Parents are expected to emotionally support their children with full financial obligations, with 46% of all new income from global economic growth since 1980 going to the richest 5%. We never catch up in our rest banks once we make it past childhood because care is an unrewarded commodity.
+    <br><br>
+    Deficit narratives sell. People would rather engage with what they know and like. We need designs that teach, rather than simply label.
+    <br><br>
+    People repeat lines as expected instead of creating genuine feedback. Even the people with the most power aren't free in their bodies. My family has achieved social mobility to the top 1% through immigration from Hispañola with education.
+    <br><br>
+    We are so constricted in our decisions with current social striations that our news is beginning to show wilder stories every day. Instead of teaching healthy decisions, current algorithms replicate all of our behaviors. Social stigmas are embedded in design from sourcing our histories.
+    <br><br>
+    Bucket sorting offers a linear model for time. We sort based on attracting what we like, and not what we learn from. Sorting allows for data intimacy.
+    <br><br>
+    Deterministic models of story forms that shape healing can preconfigure a pathway when data is missing using apophenia. Once the physical momentum is determined through one conformal metaphor, it is preserved through changed variables in the same category of sentiment, as determined by color. This is expressed through the significance of colors in the sorting of sentiment; word similarity of color vector to word vector is a significant correlation.
+    <br><br>
+    Just like spaces prescribe how we exist within them, contexts in stories carry when data variables change. Different cultures are partial to different story maps. Color sorting with story forms allows for transversal over a spatial map of sentiment to verify message with meaning.
+    <br><br>
+    Mobility through structural boundaries becomes unleashed. By creating intimacy with data, learning becomes more playful and comfortable. Sorting with 13 colors applies faith to action.
+    <br><br>
+    Self embrace from nullifying harm by enforcing consent is the way we swim in water. We feel our own selves when we touch the atmosphere, so we intuitively learn how to balance the connection with external harmony. Emitting and interpreting echoes, like a whale's echolocation, can help with navigational sensing.
+    <br><br>
+    Subjectivity is always contained in objectivity because subjects can never be removed from their objects. All color interpretations are valid, and meaningful. There is a circular gradient of meaning for complimentary opposites.
+    <br><br>
+    Sorting with 13 colors rejects the null hypothesis. By removing precision on labels, access becomes inclusive. Our perspectives become revealed by our choices in labeling, rather than projecting forward.
+    <br><br>
+    Data intimacy through play with color bucket sorting can increase access to care. I dedicate and offer this work to stewards of land and body safety. A prayer for co-liberation.
+    <br>
+          </p>
+    <h3>Bibliography</h3>
+         <p>
+    - Benjamin, Ruha. 2019. Race after Technology: Abolitionist Tools for the New Jim Code. Medford, Ma: Polity.
+    <br>
+    - Boyd, Danah. 2014. It’s Complicated: The Social Lives of Networked Teens. Yale University Press. https://www.danah.org/books/ItsComplicated.pdf.
+    <br>
+    - Christian, Brian, and Tom Griffiths. 2016. Algorithms to Live by : What Computers Can Teach Us about Solving Human Problems. New York: Henry Holt And Company.
+    <br>
+    - Costanza-Chock, Sasha. 2020. Design Justice: Community-Led Practices to Build the Worlds We Need. The Mit Press.
+    <br>
+    - Danah Zohar. 1989. The Quantum Self : Consciousness, Physics and the New World View. London: Bloomsbury.
+    <br>
+    - Federici, Silvia. 2004. Caliban and the Witch: Women, the Body and Primitive Accumulation. New York: Autonomedia.
+    <br>
+    - Hickel, Jason. 2020. Less Is More: Economics for the Age of Climate Change. Penguin Random House.
+    <br>
+    - Karin Amimoto Ingersoll. 2016. Waves of Knowing : A Seascape Epistemology. Durham: Duke University Press.
+    <br>
+    - Klein, Lauren F, and Catherine D’Ignazio. 2020. Data Feminism. Cambridge, Massachusetts: The Mit Press.
+    <br>
+    - Noble, Safiya Umoja. 2018. Algorithms of Oppression: How Search Engines Reinforce Racism. New York: New York University Press.
+    <br>
+    ‌- Zuckerman, Ethan. 2013. Digital Cosmopolitans: Why We Think the Internet Connects Us, Why It Doesn’t, and How to Rewire It. W. W. Norton & Company.
+    </p>
+  </section>
+  
+   <!-- Hero -->
+  <section class="hero">
+    <h2>Epstein News Data: Friday, January 30, 2026</h2>
+    <p>
+            [<br>
+      {<br>
+        "identity": {<br>
+          "url": "https://www.newyorker.com/magazine/2026/01/12/marjorie-taylor-greenes-big-breakup#rid=8305e066-586f-456e-8aa8-8b7419b38af5&q=epstein",<br>
+          "source": "left",<br>
+          "name": "businesses",<br>
+          "organization": "community group"<br>
+        },<br>
+        "intersection": {<br>
+          "expression": "Rep. Marjorie Taylor Greene, a Republican from Georgia, has become a lightning rod for conservatives. The MAGA congresswoman's initials have become as recognizable as those of the late liberal Supreme Court Justice Ruth Bader Ginsburg. \u201cMTG\u201d is the title of",<br>
+          "body_experience": "mental strain",<br>
+          "intention": "adaptation"<br>
+        },<br>
+        "demographic": {<br>
+          "race": "minority",<br>
+          "gender": "women",<br>
+          "education": "traditional knowledge",<br>
+          "occupation": "policy makers",<br>
+          "ability": "able",<br>
+          "wealth": "mixed",<br>
+          "health": "at risk"<br>
+        },<br>
+        "intention": {<br>
+          "autonomy": "externally imposed",<br>
+          "design": "co-created",<br>
+          "future": "Rep. Marjorie Taylor Greene, a Republican from Georgia, is known for her conspiracy theories. She has called Democrats \u201cthe party of pedophiles,\u201d and, as some Americans fretted over the possibility of an impending civil war, she demanded a \u201cnational divorce.\u201d",<br>
+          "new": "social innovation",<br>
+          "symbol": "resistance",<br>
+          "impact": "symbolic change",<br>
+          "support": "public support"<br>
+        },<br>
+        "policy_critique": {<br>
+          "origin": "community-led",<br>
+          "leak": "regulatory failure",<br>
+          "depletion": "social depletion",<br>
+          "obstacles": "political resistance"<br>
+        },<br>
+        "future": {<br>
+          "ritual": "adaptation",<br>
+          "hope": "Rep. Marjorie Taylor Greene, a Republican from Georgia, is known for her conspiracy theories. She has called Democrats \u201cthe party of pedophiles,\u201d and, as some Americans fretted over the possibility of an impending civil war, she demanded a \u201cnational divorce",<br>
+          "depict": "transitional"<br>
+        }<br>
+      },<br>
+
+      {<br>
+        "identity": {<br>
+          "url": "https://jacobin.com/2025/12/epstein-bannon-trump-elite-populism",<br>
+          "source": "left",<br>
+          "name": "citizens",<br>
+          "organization": "community group"<br>
+        },<br>
+        "intersection": {<br>
+          "expression": "Newly released documents show that Steve Bannon\u2019s supposedly working-class rebellion against a decadent elite had as a sounding board the most notoriously decadent and criminal elite of all: Jeffrey Epstein.",<br>
+          "body_experience": "labor stress",<br>
+          "intention": "adaptation"<br>
+        },<br>
+        "demographic": {<br>
+          "race": "indigenous",<br>
+          "gender": "men",<br>
+          "education": "traditional knowledge",<br>
+          "occupation": "community leaders",<br>
+          "ability": "able",<br>
+          "wealth": "mixed",<br>
+          "health": "at risk"<br>
+        },<br>
+        "intention": {<br>
+          "autonomy": "self-determined",<br>
+          "design": "co-created",<br>
+          "future": "Newly released documents show that Steve Bannon\u2019s supposedly working-class rebellion against a decadent elite had as a sounding board the most notoriously decadent and criminal elite of all: Jeffrey Epstein.",<br>
+          "new": "social innovation",<br>
+          "symbol": "resistance",<br>
+          "impact": "symbolic change",<br>
+          "support": "public support"<br>
+        },<br>
+        "policy_critique": {<br>
+          "origin": "colonial",<br>
+          "leak": "corruption",<br>
+          "depletion": "social depletion",<br>
+          "obstacles": "political resistance"<br>
+        },<br>
+        "future": {<br>
+          "ritual": "adaptation",<br>
+          "hope": "Newly released documents show that Steve Bannon\u2019s supposedly working-class rebellion against a decadent elite had as a sounding board the most notoriously decadent and criminal elite of all: Jeffrey Epstein.",<br>
+          "depict": "transitional"<br>
+        }<br>
+      },<br>
+
+
+      {<br>
+        "identity": {<br>
+          "url": "https://theintercept.com/2025/12/18/david-brooks-jeffrey-epstein-photos/",<br>
+          "source": "left",<br>
+          "name": "businesses",<br>
+          "organization": "community group"<br>
+        },<br>
+        "intersection": {<br>
+          "expression": "New York Times columnist David Brooks attended a dinner with Jeffrey Epstein in 2011. Photos of Brooks at the event emerged as part of a release of documents by the House Committee on Oversight. A Times spokesperson said Brooks attended the dinner in the normal course of journalistic duties.",<br>
+          "body_experience": "health impact",<br>
+          "intention": "resistance"<br>
+        },<br>
+        "demographic": {<br>
+          "race": "unspecified",<br>
+          "gender": "unspecified",<br>
+          "education": "traditional knowledge",<br>
+          "occupation": "community leaders",<br>
+          "ability": "unspecified",<br>
+          "wealth": "mixed",<br>
+          "health": "vulnerable"<br>
+        },<br>
+        "intention": {<br>
+          "autonomy": "externally imposed",<br>
+          "design": "co-created",<br>
+          "future": "New York Times columnist David Brooks attended a dinner with Jeffrey Epstein in 2011. Photos of Brooks at the event emerged as part of a release of documents by the House Committee on Oversight. In November, Brooks dismissed the Epstein story as an extension of QAnon.",<br>
+          "new": "social innovation",<br>
+          "symbol": "resistance",<br>
+          "impact": "symbolic change",<br>
+          "support": "public support"<br>
+        },<br>
+        "policy_critique": {<br>
+          "origin": "community-led",<br>
+          "leak": "resource extraction",<br>
+          "depletion": "social depletion",<br>
+          "obstacles": "political resistance"<br>
+        },<br>
+        "future": {<br>
+          "ritual": "adaptation",<br>
+          "hope": "New York Times columnist David Brooks attended a dinner with Jeffrey Epstein in 2011. Photos of the dinner emerged as part of a release of documents by the House Committee on Oversight. In November, Brooks dismissed the Epstein scandal as an extension of QAnon.",<br>
+          "depict": "transitional"<br>
+        }<br>
+      },<br>
+
+      {<br>
+        "identity": {<br>
+          "url": "https://www.npr.org/2026/01/27/nx-s1-5689104/tiktok-epstein-direct-messages",<br>
+          "source": "lean left",<br>
+          "name": "citizens",<br>
+          "organization": "community group"<br>
+        },<br>
+        "intersection": {<br>
+          "expression": "TikTok officials say they are looking into why many users have been unable to send the word \"Epstein\" in direct messages. California Gov. Gavin Newsom has announced an inquiry into the matter. It comes just days after TikTok finalized a sale that gave a consortium of mostly",<br>
+          "body_experience": "health impact",<br>
+          "intention": "resistance"<br>
+        },<br>
+        "demographic": {<br>
+          "race": "unspecified",<br>
+          "gender": "unspecified",<br>
+          "education": "technical expertise",<br>
+          "occupation": "policy makers",<br>
+          "ability": "unspecified",<br>
+          "wealth": "mixed",<br>
+          "health": "at risk"<br>
+        },<br>
+        "intention": {<br>
+          "autonomy": "self-determined",<br>
+          "design": "co-created",<br>
+          "future": "TikTok is investigating why some users can't send the word \"Epstein\" in direct messages. California Gov. Gavin Newsom has announced an inquiry into the matter. The timing isn't lost on anyone. It comes just days after TikTok finalized a sale that gave a consortium of mostly American investors control.",<br>
+          "new": "social innovation",<br>
+          "symbol": "resistance",<br>
+          "impact": "localized change",<br>
+          "support": "grassroots support"<br>
+        },<br>
+        "policy_critique": {<br>
+          "origin": "community-led",<br>
+          "leak": "regulatory failure",<br>
+          "depletion": "social depletion",<br>
+          "obstacles": "political resistance"<br>
+        },<br>
+        "future": {<br>
+          "ritual": "adaptation",<br>
+          "hope": "TikTok is investigating why some users can't send the word \"Epstein\" in direct messages. California Gov. Gavin Newsom announced an inquiry into the matter Monday. It comes just days after TikTok finalized a sale that gave a consortium of mostly American investors control of TikTok",<br>
+          "depict": "transitional"<br>
+        }<br>
+      },<br>
+
+      {<br>
+        "identity": {<br>
+          "url": "https://www.propublica.org/article/todd-blanche-complaint-conflict-of-interest",<br>
+          "source": "lean left",<br>
+          "name": "citizens",<br>
+          "organization": "community group"<br>
+        },<br>
+        "intersection": {<br>
+          "expression": "Todd Blanche owned at least $159,000 worth of crypto-related assets when he ordered an end to investigations into crypto companies, dealers and exchanges. Blanche, the deputy attorney general, issued the order in an April memo in which he also eliminated an enforcement team dedicated to looking",<br>
+          "body_experience": "health impact",<br>
+          "intention": "resistance"<br>
+        },<br>
+        "demographic": {<br>
+          "race": "indigenous",<br>
+          "gender": "unspecified",<br>
+          "education": "formal education",<br>
+          "occupation": "policy makers",<br>
+          "ability": "able",<br>
+          "wealth": "mixed",<br>
+          "health": "at risk"<br>
+        },<br>
+        "intention": {<br>
+          "autonomy": "self-determined",<br>
+          "design": "co-created",<br>
+          "future": "Todd Blanche owned at least $159,000 worth of crypto-related assets when he ordered an end to investigations into crypto companies, dealers and exchanges. Blanche, the deputy attorney general, issued the order in an April memo in which he also eliminated an enforcement team dedicated to looking for Crypto-related fraud.",<br>
+          "new": "social innovation",<br>
+          "symbol": "resistance",<br>
+          "impact": "localized change",<br>
+          "support": "public support"<br>
+        },<br>
+        "policy_critique": {<br>
+          "origin": "community-led",<br>
+          "leak": "corruption",<br>
+          "depletion": "economic depletion",<br>
+          "obstacles": "cultural barriers"<br>
+        },<br>
+        "future": {<br>
+          "ritual": "adaptation",<br>
+          "hope": "Todd Blanche owned at least $159,000 worth of crypto-related assets when he ordered an end to investigations into crypto companies, dealers and exchanges. Blanche, the deputy attorney general, issued the order in an April memo in which he also eliminated an enforcement team dedicated to looking",<br>
+          "depict": "resilient"<br>
+        }<br>
+      },<br>
+
+      {<br>
+        "identity": {<br>
+          "url": "https://www.cnn.com/2026/01/28/politics/justice-department-release-epstein-files-soon",<br>
+          "source": "lean left",<br>
+          "name": "governments",<br>
+          "organization": "government"<br>
+        },<br>
+        "intersection": {<br>
+          "expression": "Attorney General Pam Bondi, Deputy Attorney General Todd Blanche and US Attorney for the Southern District of New York Jay Clayton told two federal judges the department could not \u201cprovide a specific date\u201d The update comes as the Justice Department faces enormous pressure to release all of its files",<br>
+          "body_experience": "labor stress",<br>
+          "intention": "resistance"<br>
+        },<br>
+        "demographic": {<br>
+          "race": "minority",<br>
+          "gender": "unspecified",<br>
+          "education": "traditional knowledge",<br>
+          "occupation": "policy makers",<br>
+          "ability": "unspecified",<br>
+          "wealth": "mixed",<br>
+          "health": "protected"<br>
+        },<br>
+        "intention": {<br>
+          "autonomy": "externally imposed",<br>
+          "design": "co-created",<br>
+          "future": "Attorney General Pam Bondi, Deputy Attorney General Todd Blanche and US Attorney for the Southern District of New York Jay Clayton told two federal judges the department could not \u201cprovide a specific date\u201d The update comes as the Justice Department faces enormous pressure to release all of its files. Congress passed a law in November \u2013 with near-unanimous support \u2013 giving the department a December 19, 2025, deadline to do so.",<br>
+          "new": "social innovation",<br>
+          "symbol": "progress",<br>
+          "impact": "localized change",<br>
+          "support": "public support"<br>
+        },<br>
+        "policy_critique": {<br>
+          "origin": "state-led",<br>
+          "leak": "resource extraction",<br>
+          "depletion": "social depletion",<br>
+          "obstacles": "political resistance"<br>
+        },<br>
+        "future": {<br>
+          "ritual": "adaptation",<br>
+          "hope": "Attorney General Pam Bondi, Deputy Attorney General Todd Blanche and US Attorney for the Southern District of New York Jay Clayton told two federal judges the department could not \u201cprovide a specific date\u201d The update comes as the Justice Department faces enormous pressure to release all of its files",<br>
+          "depict": "transitional"<br>
+        }<br>
+      },<br>
+
+      {<br>
+        "identity": {<br>
+          "url": "https://www.bbc.com/news/articles/ce9yv73klx5o",<br>
+          "source": "center",<br>
+          "name": "citizens",<br>
+          "organization": "government"<br>
+        },<br>
+        "intersection": {<br>
+          "expression": "Lord Mandelson apologises to victims of paedophile Jeffrey Epstein. Former cabinet minister maintains friendship with late financier. Mandelson was sacked as UK ambassador to the US in September last year.",<br>
+          "body_experience": "health impact",<br>
+          "intention": "resistance"<br>
+        },<br>
+        "demographic": {<br>
+          "race": "global north",<br>
+          "gender": "women",<br>
+          "education": "formal education",<br>
+          "occupation": "policy makers",<br>
+          "ability": "able",<br>
+          "wealth": "mixed",<br>
+          "health": "stable"<br>
+        },<br>
+        "intention": {<br>
+          "autonomy": "self-determined",<br>
+          "design": "co-created",<br>
+          "future": "Lord Mandelson apologises to victims of paedophile Jeffrey Epstein. Ex-cabinet minister says he did not want to be held responsible for Epstein's crimes. Mandelson was dismissed as ambassador to the US last September.",<br>
+          "new": "social innovation",<br>
+          "symbol": "resistance",<br>
+          "impact": "localized change",<br>
+          "support": "public support"<br>
+        },<br>
+        "policy_critique": {<br>
+          "origin": "state-led",<br>
+          "leak": "resource extraction",<br>
+          "depletion": "social depletion",<br>
+          "obstacles": "political resistance"<br>
+        },<br>
+        "future": {<br>
+          "ritual": "adaptation",<br>
+          "hope": "Lord Mandelson apologises to victims of paedophile Jeffrey Epstein. Ex-ambassador to the US says he was 'ignorant, not indifferent' to Epstein's crimes. Mandelson was sacked as ambassador to the U.S. last September.",<br>
+          "depict": "transitional"<br>
+        }<br>
+      },<br>
+
+      {<br>
+        "identity": {<br>
+          "url": "https://www.newsweek.com/is-tiktok-censoring-content-changes-app-explained-11426599",<br>
+          "source": "center",<br>
+          "name": "citizens",<br>
+          "organization": "community group"<br>
+        },<br>
+        "intersection": {<br>
+          "expression": "The day before the fatal shooting of Alex Pretti in Minneapolis, TikTok users noticed they were unable to post videos that were critical of Immigration and Customs Enforcement. California Governor Gavin Newsom, a Democrat, said he would launch a review of whether TikTok violated state law by censoring",<br>
+          "body_experience": "health impact",<br>
+          "intention": "adaptation"<br>
+        },<br>
+        "demographic": {<br>
+          "race": "unspecified",<br>
+          "gender": "unspecified",<br>
+          "education": "traditional knowledge",<br>
+          "occupation": "community leaders",<br>
+          "ability": "able",<br>
+          "wealth": "mixed",<br>
+          "health": "at risk"<br>
+        },<br>
+        "intention": {<br>
+          "autonomy": "externally imposed",<br>
+          "design": "co-created",<br>
+          "future": "The day before the fatal shooting of Alex Pretti, TikTok users noticed they were unable to post videos that were critical of Immigration and Customs Enforcement. California Governor Gavin Newsom, a Democrat, said he would launch a review of whether TikTok violated state law by censoring content critical of President Donald Trump. TikTok has denied any censorship on the app.",<br>
+          "new": "social innovation",<br>
+          "symbol": "resistance",<br>
+          "impact": "localized change",<br>
+          "support": "public support"<br>
+        },<br>
+        "policy_critique": {<br>
+          "origin": "colonial",<br>
+          "leak": "resource extraction",<br>
+          "depletion": "social depletion",<br>
+          "obstacles": "political resistance"<br>
+        },<br>
+        "future": {<br>
+          "ritual": "adaptation",<br>
+          "hope": "The day before the fatal shooting of Alex Pretti in Minneapolis, TikTok users noticed they were unable to post videos that were critical of Immigration and Customs Enforcement. California Governor Gavin Newsom, a Democrat, said he would launch a review of whether TikTok violated state law by censoring",<br>
+          "depict": "transitional"<br>
+        }<br>
+      },<br>
+
+      {<br>
+        "identity": {<br>
+          "url": "https://www.forbes.com/sites/maryroeloffs/2025/12/31/spa-workers-accusation-got-jeffrey-epstein-banned-from-mar-a-lago-spa-report-says/?ctpv=searchpage",<br>
+          "source": "center",<br>
+          "name": "workers",<br>
+          "organization": "community group"<br>
+        },<br>
+        "intersection": {<br>
+          "expression": "Jeffrey Epstein was banned from using Mar-a-Lago's spa services in 2003 after he pressured an 18-year-old worker for sex, a new report says. Epstein's close relationship with Trump afforded him the privilege of house calls from spa employees for massages and other services",
+          "body_experience": "health impact",<br>
+          "intention": "adaptation"<br>
+        },<br>
+        "demographic": {<br>
+          "race": "unspecified",<br>
+          "gender": "unspecified",<br>
+          "education": "traditional knowledge",<br>
+          "occupation": "workers",<br>
+          "ability": "able",<br>
+          "wealth": "mixed",<br>
+          "health": "at risk"<br>
+        },<br>
+        "intention": {<br>
+          "autonomy": "externally imposed",<br>
+          "design": "co-created",<br>
+          "future": "Jeffrey Epstein was banned from using Mar-a-Lago's spa in 2003 after he pressured an 18-year-old worker for sex, a new report says. Epstein's close relationship with Trump afforded him the privilege of house calls from spa employees for massages and other services from the late 1990s and early 2000s. Epstein was known to be sexually suggestive and expose himself during appointments, the Wall Street Journal reported. Trump has given a variety of answers over the years about why",<br>
+          "new": "social innovation",<br>
+          "symbol": "resistance",<br>
+          "impact": "localized change",<br>
+          "support": "grassroots support"<br>
+        },<br>
+        "policy_critique": {<br>
+          "origin": "community-led",<br>
+          "leak": "resource extraction",<br>
+          "depletion": "social depletion",<br>
+          "obstacles": "political resistance"<br>
+        },<br>
+        "future": {<br>
+          "ritual": "adaptation",<br>
+          "hope": "Jeffrey Epstein was allegedly banned from using the spa services of President Donald Trump\u2019s Mar-a-Lago resort in Florida after he pressured an 18-year-old worker for sex. Epstein's close relationship with Trump afforded him the privilege of house calls from spa employees for mass",<br>
+          "depict": "transitional"<br>
+        }<br>
+      },<br>
+
+      {<br>
+        "identity": {<br>
+          "url": "https://www.foxnews.com/politics/bill-hillary-clinton-risk-contempt-house-after-missing-epstein-depositions",<br>
+          "source": "lean right",<br>
+          "name": "workers",<br>
+          "organization": "government"<br>
+        },<br>
+        "intersection": {<br>
+          "expression": "The House Oversight Committee will consider whether to tee up House-wide votes on holding former President Bill Clinton and former Secretary of State Hillary Clinton in contempt of Congress. The committee had originally requested Bill and Hillary Clinton to appear before lawmakers on Oct. 14 and Oct. 9, 2025, respectively",<br>
+          "body_experience": "health impact",<br>
+          "intention": "resistance"<br>
+        },<br>
+        "demographic": {<br>
+          "race": "minority",<br>
+          "gender": "men",<br>
+          "education": "technical expertise",<br>
+          "occupation": "policy makers",<br>
+          "ability": "able",<br>
+          "wealth": "mixed",<br>
+          "health": "at risk"<br>
+        },<br>
+        "intention": {<br>
+          "autonomy": "externally imposed",<br>
+          "design": "co-created",<br>
+          "future": "The House Oversight Committee will consider whether to tee up House-wide votes on holding former President Bill Clinton and former Secretary of State Hillary Clinton in contempt of Congress. If passed by the committee, the resolutions would put the contempt findings\u2019 consideration to the whole House of Representatives. The committee had originally requested Bill and Hillary Clinton to appear before lawmakers on Oct. 14 and Oct. 9, 2025.",<br>
+          "new": "technological innovation",<br>
+          "symbol": "resistance",<br>
+          "impact": "localized change",<br>
+          "support": "public support"<br>
+        },<br>
+        "policy_critique": {<br>
+          "origin": "state-led",<br>
+          "leak": "corruption",<br>
+          "depletion": "social depletion",<br>
+          "obstacles": "political resistance"<br>
+        },<br>
+        "future": {<br>
+          "ritual": "adaptation",<br>
+          "hope": "The House Oversight Committee will consider whether to tee up House-wide votes on holding former President Bill Clinton and former Secretary of State Hillary Clinton in contempt of Congress. The committee had originally requested Bill and Hillary Clinton to appear before lawmakers on Oct. 14 and Oct. 9, 2025, respectively",<br>
+          "depict": "transitional"<br>
+        }<br>
+      },<br>
+
+      {<br>
+        "identity": {<br>
+          "url": "https://www.theexaminernews.com/the-enduring-stain-of-our-communitys-open-secret-and-a-mount-kisco-natives-heroics/",<br>
+          "source": "lean right",<br>
+          "name": "citizens",<br>
+          "organization": "community group"<br>
+        },<br>
+        "intersection": {<br>
+          "expression": "Greg Ardanowski was 10 years old when he met Jimmy Collins, the coach of his local Little League team. Collins was a big local personality, and he was seen as a father figure to Ardanowsi. Collins is accused of sexually harassing the boy in the 1980s.",<br>
+          "body_experience": "labor stress",<br>
+          "intention": "adaptation"<br>
+        },<br>
+        "demographic": {<br>
+          "race": "minority",<br>
+          "gender": "men",<br>
+          "education": "technical expertise",<br>
+          "occupation": "workers",<br>
+          "ability": "able",<br>
+          "wealth": "mixed",<br>
+          "health": "at risk"<br>
+        },<br>
+        "intention": {<br>
+          "autonomy": "externally imposed",<br>
+          "design": "co-created",<br>
+          "future": "Greg Ardanowski was 10 years old when he met Jimmy Collins, the coach of his local Little League team. Collins was a father figure to a kid who never heard \u201cI love you\u201d at home. Collins groomed the boy into a star player, who went on to win a league gold glove.",<br>
+          "new": "social innovation",<br>
+          "symbol": "progress",<br>
+          "impact": "symbolic change",<br>
+          "support": "public support"<br>
+        },<br>
+        "policy_critique": {<br>
+          "origin": "community-led",<br>
+          "leak": "resource extraction",<br>
+          "depletion": "social depletion",<br>
+          "obstacles": "cultural barriers"<br>
+        },<br>
+        "future": {<br>
+          "ritual": "remembrance",<br>
+          "hope": "Greg Ardanowski was 10 years old when he met Jimmy Collins, the coach of his local Little League team. Collins was a father figure to Ardanowsi, who had never heard \"I love you\" at home. Collins would go on to become a successful Little League coach",<br>
+          "depict": "resilient"<br>
+        }<br>
+      },<br>
+
+      {<br>
+        "identity": {<br>
+          "url": "https://reason.com/2026/01/22/josh-shapiro-goes-to-war-with-kamala-harris/",<br>
+          "source": "lean right",<br>
+          "name": "citizens",<br>
+          "organization": "community group"<br>
+        },<br>
+        "intersection": {<br>
+          "expression": "Former Vice President Kamala Harris passed over Josh Shapiro to join her presidential ticket. Shapiro is the popular governor of the must-win state of Pennsylvania. In his new book, Shapiro side-eyes the Harris campaign for seeking to relegate him to the role of extreme junior partner.",<br>
+          "body_experience": "health impact",<br>
+          "intention": "resistance"<br>
+        },<br>
+        "demographic": {<br>
+          "race": "unspecified",<br>
+          "gender": "unspecified",<br>
+          "education": "formal education",<br>
+          "occupation": "community leaders",<br>
+          "ability": "able",<br>
+          "wealth": "mixed",<br>
+          "health": "at risk"<br>
+        },<br>
+        "intention": {<br>
+          "autonomy": "externally imposed",<br>
+          "design": "co-created",<br>
+          "future": "Josh Shapiro, the popular governor of the must-win state of Pennsylvania, was passed over for Kamala Harris' presidential ticket. Shapiro side-eyes the Harris campaign for seeking to relegate him to the role of extreme junior partner. In his new book, Shapiro asks whether he was an Israeli double agent.",<br>
+          "new": "social innovation",<br>
+          "symbol": "resistance",<br>
+          "impact": "localized change",<br>
+          "support": "public support"<br>
+        },<br>
+        "policy_critique": {<br>
+          "origin": "community-led",<br>
+          "leak": "resource extraction",<br>
+          "depletion": "social depletion",<br>
+          "obstacles": "political resistance"<br>
+        },<br>
+        "future": {<br>
+          "ritual": "adaptation",<br>
+          "hope": "Josh Shapiro, the popular governor of Pennsylvania, was passed over for Kamala Harris' presidential ticket. In his new book, Shapiro side-eyes the Harris campaign for seeking to relegate him to the role of extreme junior partner. In grilling Shapiro on his views regarding Israel, the",<br>
+          "depict": "transitional"<br>
+        }<br>
+      },<br>
+
+      {<br>
+        "identity": {<br>
+          "url": "https://www.dailymail.co.uk/news/article-15303481/mark-epstein-brother-files-scrubbed-republican-names.html",<br>
+          "source": "right",<br>
+          "name": "governments",<br>
+          "organization": "government"<br>
+        },<br>
+        "intersection": {<br>
+          "expression": "Mark Epstein, the brother of the late sex offender, has made a bombshell claim that Republicans' names are getting scrubbed from the government's files on the deceased disgraced sex offender. 'There\u2019s a facility in Winchester, Virginia, where they\u2019re scrubbing the",<br>
+          "body_experience": "health impact",<br>
+          "intention": "resistance"<br>
+        },<br>
+        "demographic": {<br>
+          "race": "unspecified",<br>
+          "gender": "unspecified",<br>
+          "education": "technical expertise",<br>
+          "occupation": "workers",<br>
+          "ability": "able",<br>
+          "wealth": "mixed",<br>
+          "health": "at risk"<br>
+        },<br>
+        "intention": {<br>
+          "autonomy": "externally imposed",<br>
+          "design": "co-created",<br>
+          "future": "Mark Epstein, the brother of the late sex offender, has made a bombshell claim that Republicans' names are getting scrubbed from the government's files on the deceased disgraced sex offender. 'There\u2019s a facility in Winchester, Virginia, where they\u2019re scrubbing the files to take Republican names out of it,' Mark Epstein claimed. Mark also revealed that his brother had 'dirt' on President Donald Trump during the appearance.",<br>
+          "new": "social innovation",<br>
+          "symbol": "resistance",<br>
+          "impact": "symbolic change",<br>
+          "support": "public support"<br>
+        },<br>
+        "policy_critique": {<br>
+          "origin": "colonial",<br>
+          "leak": "resource extraction",<br>
+          "depletion": "social depletion",<br>
+          "obstacles": "political resistance"<br>
+        },<br>
+        "future": {<br>
+          "ritual": "adaptation",<br>
+          "hope": "'There\u2019s a facility in Winchester, Virginia, where they\u2019re scrubbing the files to take Republican names out of it,' Mark Epstein told NewsNation on Monday. Mark also revealed that his brother had 'dirt' on President Donald Trump during the appearance.",<br>
+          "depict": "transitional"<br>
+        }<br>
+      },<br>
+
+      {<br>
+        "identity": {<br>
+          "url": "https://thepostmillennial.com/ghislaine-maxwell-to-testify-before-house-oversight-committee-on-february-9",<br>
+          "source": "right",<br>
+          "name": "citizens",<br>
+          "organization": "community group"<br>
+        },<br>
+        "intersection": {<br>
+          "expression": "Ghislaine Maxwell is scheduled to testify before the House Oversight and Government Reform Committee in a closed-door deposition on February 9. Maxwell\u2019s deposition will be conducted virtually and behind closed doors. She is currently serving a 20-year sentence at a federal prison camp in Texas after",<br>
+          "body_experience": "health impact",<br>
+          "intention": "resistance"<br>
+        },<br>
+        "demographic": {<br>
+          "race": "minority",<br>
+          "gender": "unspecified",<br>
+          "education": "traditional knowledge",<br>
+          "occupation": "policy makers",<br>
+          "ability": "able",<br>
+          "wealth": "mixed",<br>
+          "health": "at risk"<br>
+        },<br>
+        "intention": {<br>
+          "autonomy": "externally imposed",<br>
+          "design": "co-created",<br>
+          "future": "Ghislaine Maxwell is scheduled to testify before the House Oversight and Government Reform Committee in a closed-door deposition on February 9. She is currently serving a 20-year sentence at a federal prison camp in Texas after being sentenced in 2022. In a letter dated January 20, Maxwell\u2019s attorneys said she has not changed her position regarding her Fifth Amendment rights.",<br>
+          "new": "social innovation",<br>
+          "symbol": "resistance",<br>
+          "impact": "localized change",<br>
+          "support": "public support"<br>
+        },<br>
+        "policy_critique": {<br>
+          "origin": "community-led",<br>
+          "leak": "resource extraction",<br>
+          "depletion": "social depletion",<br>
+          "obstacles": "political resistance"<br>
+        },<br>
+        "future": {<br>
+          "ritual": "adaptation",<br>
+          "hope": "Ghislaine Maxwell is scheduled to testify before the House Oversight and Government Reform Committee in a closed-door deposition on February 9. She is currently serving a 20-year sentence at a federal prison camp in Texas after being sentenced in 2022. In a letter dated January 20, Maxwell\ufffd",<br>
+          "depict": "transitional"<br>
+        }<br>
+      },<br>
+
+      {<br>
+        "identity": {<br>
+          "url": "https://spectator.org/how-did-summers-vetting-repeatedly-miss-epstein-ties/",<br>
+          "source": "right",<br>
+          "name": "governments",<br>
+          "organization": "community group"<br>
+        },<br>
+        "intersection": {<br>
+          "expression": "Larry Summers\u2019s involvement with Jeffrey Epstein goes back to at least 1998. He maintained his contact with Epstein until July 5, 2019, the day before his arrest. The question is: Did everyone miss the connection and its seriousness, or did they choose to ignore it?",<br>
+          "body_experience": "health impact",<br>
+          "intention": "adaptation"<br>
+        },<br>
+        "demographic": {<br>
+          "race": "minority",<br>
+          "gender": "unspecified",<br>
+          "education": "traditional knowledge",<br>
+          "occupation": "policy makers",<br>
+          "ability": "able",<br>
+          "wealth": "mixed",<br>
+          "health": "at risk"<br>
+        },<br>
+        "intention": {<br>
+          "autonomy": "externally imposed",<br>
+          "design": "co-created",<br>
+          "future": "Larry Summers\u2019s involvement with Jeffrey Epstein goes back to at least 1998. He maintained his contact with Epstein until July 5, 2019, the day before his arrest. The question is: Did everyone miss the connection and its seriousness, or did they choose to ignore it?",<br>
+          "new": "social innovation",<br>
+          "symbol": "progress",<br>
+          "impact": "localized change",<br>
+          "support": "institutional support"<br>
+        },<br>
+        "policy_critique": {<br>
+          "origin": "community-led",<br>
+          "leak": "resource extraction",<br>
+          "depletion": "social depletion",<br>
+          "obstacles": "cultural barriers"<br>
+        },<br>
+        "future": {<br>
+          "ritual": "remembrance",<br>
+          "hope": "Larry Summers\u2019s involvement with Jeffrey Epstein goes back to at least 1998. He maintained his contact with Epstein until July 5, 2019. That is a cumulative 22 years, a considerable amount of time by any standard. The question is: Did everyone miss the connection and its seriousness,",<br>
+          "depict": "transitional"<br>
+        }<br>
+      }<br>
+      ]<br>
+    </p>
+  </section>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h2>Epstein's Color World</h2>
+    <p>
+      {<br>
+  "identity": {<br>
+    "url": "multiple sources",<br>
+    "source": "left",<br>
+    "name": "citizens",<br>
+    "organization": "community group"<br>
+  },<br>
+  "intersection": {<br>
+    "expression": "New York Times columnist David Brooks attended a dinner with Jeffrey Epstein in 2011. TikTok officials say they are looking into why many users have been unable to send the word \"Epstein\" in direct messages. California",<br>
+    "body_experience": "health impact",<br>
+    "intention": "resistance"<br>
+  },<br>
+  "demographic": {<br>
+    "race": "minority",<br>
+    "gender": "unspecified",<br>
+    "education": "traditional knowledge",<br>
+    "occupation": "policy makers",<br>
+    "ability": "able",<br>
+    "wealth": "mixed",<br>
+    "health": "at risk"<br>
+  },<br>
+  "intention": {<br>
+    "autonomy": "externally imposed",<br>
+    "design": "co-created",<br>
+    "future": "New York Times columnist David Brooks attended a dinner with Jeffrey Epstein in 2011. The day before the fatal shooting of Alex Pretti, TikTok users noticed they were unable to post videos that",<br>
+    "new": "social innovation",<br>
+    "symbol": "resistance",<br>
+    "impact": "localized change",<br>
+    "support": "public support"<br>
+  },<br>
+  "policy_critique": {<br>
+    "origin": "community-led",<br>
+    "leak": "resource extraction",<br>
+    "depletion": "social depletion",<br>
+    "obstacles": "political resistance"<br>
+  },<br>
+  "future": {<br>
+    "ritual": "adaptation",<br>
+    "hope": "TikTok is investigating why some users can't send the word \"Epstein\" in direct messages. California Gov. Gavin Newsom announced an inquiry into the",<br>
+    "depict": "transitional"<br>
+  },<br>
+  "meta": {<br>
+    "country": "",<br>
+    "article_count": 15,<br>
+    "method": "most-common categorical + synthesized narrative"<br>
+  }<br>
+}<br>
+      <br><br>
+    Here is a policy letter written in a lyrical yet precise style, grounded in the outputs from the JSON file:
+<br><br>
+To transform our collective future, we must first acknowledge the determinism of social construction. The personal politics of identity and community are intertwined, as reflected in the experiences of minority citizens, particularly those with at-risk health. Our intention is to resist the external imposition of autonomy and instead co-create a design for a more equitable future.
+<br><br>
+The body experience of health impact demands a localized change, which can only be achieved through public support. By addressing the resource extraction that depletes our social capital, we can preserve the symbol of resistance and create a new social innovation.
+<br><br>
+To end the origin of community-led efforts being derailed by political resistance, we must first identify and rectify the leak of information and resources. This requires an adaptation to the changing landscape, fueled by hope and guided by transitional principles.
+<br><br>
+Ultimately, our policy critique must prioritize the well-being of those most affected, ensuring that public support is mobilized to address the obstacles of social depletion. By doing so, we can depict a brighter future, one where TikTok users are empowered to express themselves freely, without fear of censorship or manipulation.
+<br><br>
+Let us work together to create a more just and equitable world, grounded in truth and moving forward with purpose.
+
+    </p>
+        <ul class="color-list">
+             <li class="grey"><strong>grey:</strong> cover, lose, precary -&gt; political resistance</li>
+             <li class="pink"><strong>pink:</strong> category, place, ambitious -&gt; social innovation</li>
+             <li class="gold"><strong>gold:</strong> pull, hide, technocracy lotiform -&gt; resistance</li>
+             <li class="nude"><strong>nude:</strong> approach, jump, unextenuable -&gt; external validation</li>
+             <li class="orange"><strong>orange:</strong> hit, drop, blurry artesian -&gt; localized change</li>
+             <li class="white"><strong>white:</strong> hope, block, analeptical -&gt; free speech</li>
+             <li class="blue"><strong>blue:</strong> collect, glean, photopathy -&gt; adaptation</li>
+             <li class="green"><strong>green:</strong> transition, grow, bulbous heroic -&gt; transition</li>
+             <li class="red"><strong>red:</strong> limit, cry, apophantic -&gt; resource extraction</li>
+             <li class="black"><strong>black:</strong> order, scale, swabble -&gt; community</li>
+             <li class="brown"><strong>brown:</strong> learn, shrink, notable submissive -&gt; social empowerment</li>
+             <li class="yellow"><strong>yellow:</strong> structure, array, redressible authority -&gt; public support</li>
+             <li class="purple"><strong>purple:</strong> free, cheer, brave -&gt; resistance</li>
+        </ul>
+  </section>
+    <section class="hero">
+    <h2>Alchemize with Color</h2>
+    <p>
+      To use this tabular, find the above color meaning you want to attract or release. <br>
+      <br>
+      To attract a color, find the sequences with high Gross National Happiness scores of that color. They will have the longest bars of the matching color.<br>
+      <br>
+      To repel a color, find the sequences with lowest Gross National Happiness scores for that color. They will have the shortest bars of the matching color.<br>
+      <br>
+      The power of metaphor and story, mixed with the containment of conformal shapes, preserving angles but not distances, allows for controlled, bottom-up navigation.  <br>
+      <br>
+    </p>
+      <h2>Reading the Line Graphs</h2>
+      <p>
+        To interpret the momentum plots we are looking at color sequences as wave-like signals of color derived from RGB arrays.
+<br><br>
+Each RGB array within a sequence is treated as a discrete signal. When converted into complex momentum, it behaves like a wave packet, where:<br>
+<br>
+* Real part → cosine-like component (in-phase wave)<br>
+* Imaginary part → sine-like component (quadrature wave)<br>
+* Magnitude → wave energy (amplitude)<br>
+* Phase → wave direction & interference state<br>
+        <br>
+Think of each color as a separate oscillatory mode.
+      </p>
+<h3>1. Real Part of Momentum → Standing / Traveling Wave</h3>
+<p>
+* Represents the in-phase oscillation<br>
+* Smooth variation → coherent wave<br>
+* Sharp sign changes → reflections or boundaries<br>
+* Positive → forward propagation<br>
+* Negative → reverse or reflected wave<br>
+* Symmetry → standing wave behavior<br>
+* Small-amplitude oscillations indicate low-energy but coherent waves.
+      </p>
+<h3>B. Imaginary Part of Momentum → Phase-Shifted Wave</h3>
+      <p>
+* Represents the 90° shifted component<br>
+* Strong oscillations → rotating or spiral wave motion<br>
+* Zero crossings → resonance nodes<br>
+* Large swings → phase instability or mode switching
+      </p>
+<h3>C. Magnitude of Momentum → Wave Energy Womb</h3>
+      <p>
+* Flat magnitude → energy-conserving wave<br>
+* Spikes → localized excitation<br>
+* Drops → damping or destructive interference<br>
+* Nearly constant magnitude ⇒ stable wave packet. This confirms no energy loss, only phase rotation
+      </p>
+<h3>D. Phase of Momentum → Wave Direction & Interference</h3>
+      <p>
+This is the most important wave diagnostic.<br>
+        <br>
+Phase Behavior : Meaning<br>
+Linear change :	Traveling wave<br>
+Sudden jumps : Phase / mode change<br>
+Oscillatory	: Standing or beating wave<br>
+        <br>
+* Different RGB arrays → different phase trajectories<br>
+* Crossing ±π → wave inversion
+      </p>
+      <h3>E. Trajectory Plot → Wave Path in Space</h3>
+      <p>
+The trajectory plots show how the wave moves through space over time.<br>
+        <br>
+Interpret as:<br>
+        <br>
+* Points → wave samples<br>
+* Lines → propagation path<br>
+* Color gradient → time evolution<br>
+* Straight line → uniform propagation<br>
+* Zig-zag → interference or reflection<br>
+* Closed loops → standing wave or resonance cavity<br>
+* Knots / crossings → topological wave modes<br>
+        <br>
+      </p>
+    <h2>Setting the Womb: The Knot Container</h2>
+    <h3>0. Land & Lineage Acknowledgement</h3>
+    <p>
+    Begin by orienting to place and inheritance.<br>
+    <br>
+    This includes:<br>
+    <br>
+    * A land acknowledgement honoring the ancestral and ecological context of where the work is taking place<br>
+    * An intentional lineage acknowledgement, informed by the above Color World<br>
+    <br>
+    This step establishes that the work does not belong solely to the individual, it is held within a wider field of relation.
+    </p>
+    <h3>1. Identify the Block</h3>
+    <p>
+    Name, do not solve, the current block.<br>
+    <br>
+    The block may appear as:<br>
+    <br>
+    * Emotional stagnation<br>
+    * Repetitive relational patterns<br>
+    * Somatic tension or numbness<br>
+    * Cognitive loops or loss of meaning<br>
+    <br>
+    This step locates where the Knot has formed, without forcing interpretation or self-correction.
+    </p>
+    <h3>2. Reading</h3>
+    <p>
+    A short, curated reading to attune the nervous system and symbolic mind.<br>
+    <br>
+    The reading functions as:<br>
+    <br>
+    * A tuning fork for shared resonance<br>
+    * A permission slip to move beyond linear logic<br>
+    * A softening of internal surveillance<br>
+    <br>
+    The reading is not instructional; it is atmospheric.
+    </p>
+    <h3>3. Guided Visualization & Meditation</h3>
+    <p>
+    A guided visualization invites participants into the body and imaginal field.<br>
+    <br>
+    This meditation:<br>
+    <br>
+    * Establishes internal safety and orientation<br>
+    * Activates somatic awareness before analysis<br>
+    * Prepares the psyche to encounter shadow without fragmentation<br>
+    <br>
+    The aim is not transcendence, but presence.
+    </p>
+    <h3>4. Knot Sequence</h3>
+    <p>
+    The Knot sequence is introduced as the core womb structure.<br>
+    <br>
+    The Knot:<br>
+    <br>
+    * Holds contradiction without collapse<br>
+    * Allows intensity to arise alongside boundaries<br>
+    * Prevents premature meaning-making<br>
+    <br>
+    This sequence supports participants in staying with what is entangled, rather than bypassing it.
+    </p>
+    <h3>5. Plot Sequence</h3>
+    <p>
+    Once the Knot is stabilized, the Plot sequence traces how the block came into being.<br>
+    <br>
+    Here we examine:<br>
+    <br>
+    * How value, attachment, or survival strategies shaped the story<br>
+    * Where influence or adaptation altered integrity<br>
+    * How movement began, stalled, or diverted<br>
+    <br>
+    The Plot restores narrative continuity without blame.
+    </p>
+    <h3>6. Additional Sequences (As Needed)</h3>
+    <p>
+    Other sequences may be introduced selectively (Pain, Sad, Fem, Direct, etc.), depending on what colors/Gross National Happiness indicators the material calls for.<br>
+    <br>
+    These sequences are not additive - they are responsive, offering specific pathways for different complimentary oppositions.
+    </p>
+    <h3>7. Physical Trajectory Reflection</h3>
+    <p>
+    Reflect on how the work moved through the body.<br>
+    <br>
+    This includes noticing:<br>
+    <br>
+    * Shifts in posture, breath, or tension<br>
+    * Moments of contraction or expansion<br>
+    * Where clarity felt embodied rather than conceptual<br>
+    <br>
+    The body is treated as data, not metaphor.
+    </p>
+    <h3>8. Discussion & Shedding</h3>
+    <p>
+    Participants are invited to share selectively, with emphasis on:<br>
+    <br>
+    * Accountability rather than confession<br>
+    * Witnessing rather than fixing<br>
+    * Naming what is being released, returned
+      </p>
+    <h3>9. Closing</h3>
+    <p>
+    The container should be closed intentionally to protect the findings. This may include:<br>
+    <br>
+    * A brief grounding statement<br>
+    * A return to land and lineage<br>
+    * A reminder that integration continues beyond the session<br>
+    <br>
+    The womb is sealed, not to trap, but to protect what has been created.<br>
+    <br>
+    This process is not therapy, diagnosis, or performance. It is a sovereign space where shadow is allowed to exist long enough to reorganize itself, held by color, sequence, body, and consent.
+    </p>
+  </section>
+
+  <!-- Color Pathways -->
+  <section class="hero">
+    <figure class="fig">
+      <h3>plot</h3>
+      <img src="plot pathway.png" alt="plot">
+      <img src="epstein_plot.png" alt="epstein GNH plot">
+      <div class="cap">
+          <p>
+           <strong>Pathway:</strong> set the political resistance from the social innovation and the resistance to return a external validation and an localized change. // Grey: political resistance // Pink: social innovation // Gold: resistance // Nude: external validation // Orange: localized change<br>
+           <strong>Trajectory:</strong> This pathway represents a journey of self-actualization or creation. It begins with more challenging or negative emotions and progresses toward more positive states. This type of progression is often associated with setting intentions for overcoming obstacles, personal growth, or resolution of conflicts.<br>
+           The journey from 'precary' to 'blurry artesian' suggests a narrative arc that maintains positive qualities while transforming their expression or focus.<br>
+           <strong>Prompt:</strong> How can we separate political resistance from our actions of public resistance and efforts in social design? How can we focus on feedback from areas of success and real affect?
+        </p>
+      </div>
+    </figure>
+
+    <figure class="fig">
+      <h3>knot</h3>
+      <img src="knot pathway.png" alt="knot">
+      <img src="epstein_knot.png" alt="epstein GNH knot">
+      <div class="cap">
+          <p>
+           <strong>Pathway:</strong> clarify the free speech with adaptation from transition. The resource extraction will melt with community from social empowerment due to public support for resistance. // White: free speech // Blue: adaptation // Green: transition // Red: resource extraction // Black: community // Brown: social empowerment // Yellow: public support // Purple: resistance<br>
+           <strong>Trajectory:</strong> This pathway represents a <strong>circular</strong> journey of healing or resolution. It begins with more challenging or negative emotions and progresses toward more positive states. This type of progression is often associated with narratives of reclamation and regenration.<br>
+           The journey from 'analeptical' to 'brave' suggests a narrative arc that navigates through different forms of challenge or complexity.<br>
+           <strong>Prompt:</strong> Where is our freedom of expression protected? How can we drag out the boundaries of those spaces by taking feedback from successful plots? How can we contribute to data sovereignty?
+        </p>
+      </div>
+    </figure>
+
+
+    <figure class="fig">
+      <h3>pain</h3>
+      <img src="pain pathway.png" alt="pain">
+      <img src="epstein_pain.png" alt="epstein GNH pain">
+      <div class="cap">
+          <p>
+           <strong>Pathway:</strong> use inspiration from clarity and distribution from resistance to address the pain from the localized change as from the world of a return. // Gold: resistance // Orange: localized change<br>
+           <strong>Trajectory:</strong> This pathway represents a journey of oppression. It is in a vertical line, a penetration. This type of progression is often associated with narratives of obstacle, harm, or conflict.<br>
+           The journey from 'technocracy lotiform' to 'blurry artesian' suggests a narrative arc that navigates through different forms of challenge or complexity.<br>
+           <strong>Prompt:</strong> How does the impact of the resistance directly affect political resistance?
+        </p>
+      </div>
+    </figure>
+
+    <figure class="fig">
+      <h3>practical</h3>
+      <img src="practical pathway.png" alt="practical">
+      <img src="epstein_practical.png" alt="epstein GNH practical">
+      <div class="cap">
+          <p>
+           <strong>Pathway:</strong> use our energy from work to achieve the public support for the transition. // Yellow: public support // Green: transition<br>
+           <strong>Trajectory:</strong> This pathway maintains a relatively consistent emotional tone throughout. This stability suggests a steady state or persistent emotional quality. Such pathways can represent enduring emotional states, established environments, or consistent character traits.<br>
+           The journey from 'redressible authority' to 'bulbous heroic' suggests a narrative arc that maintains positive qualities while transforming their expression or focus.<br>
+           <strong>Prompt:</strong> How can we dedicate our efforts to social connection in the trajectory of resistance?
+        </p>
+      </div>
+    </figure>
+    
+
+    <figure class="fig">
+      <h3>spiritual</h3>
+      <img src="spiritual pathway.png" alt="spiritual">
+      <img src="epstein_spiritual.png" alt="epstein GNH spiritual">
+      <div class="cap">
+          <p>
+           <strong>Pathway:</strong> adaptation with social empowerment. // Blue: adaptation // Brown: social empowerment<br>
+           <strong>Trajectory:</strong> This pathway represents a journey on an incline, increasing in complexity through its duration. It begins with more positive or stable emotions and works through more difficult or negative states. This type of progression can be associated with narratives of increasing tension, confronting difficulties, or exploring deeper emotional complexities.<br>
+           The journey from 'photopathy' to 'notable submissive' suggests a narrative arc that maintains positive qualities while transforming their expression or focus.<br>
+           <strong>Prompt:</strong> How can we be sure that our social resources actually meet our community goals and needs?
+          </p>
+      </div>
+    </figure>
+
+    <figure class="fig">
+      <h3>prayer</h3>
+      <img src="prayer pathway.png" alt="prayer">
+      <img src="epstein_prayer.png" alt="epstein GNH prayer">
+      <div class="cap">
+          <p>
+           <strong>Pathway:</strong> external validation our free speech. // Nude: external validation // White: free speech<br>
+           <strong>Trajectory:</strong> This pathway represents a journey on an incline, increasing in complexity through its duration. It begins with more positive or stable emotions and works through more difficult or negative states. This type of progression can be associated with narratives of increasing tension, confronting difficulties, or exploring deeper emotional complexities.<br>
+           The journey from 'unextenuable' to 'analeptical' suggests a narrative arc that navigates through different forms of challenge or complexity.<br>
+           <strong>Prompt:</strong> How can we support a culture of acceptance?
+        </p>
+      </div>
+    </figure>
+
+    
+    <figure class="fig">
+      <h3>sad</h3>
+      <img src="sad pathway.png" alt="sad">
+      <img src="epstein_sad.png" alt="epstein GNH sad">
+      <div class="cap">
+          <p>
+           <strong>Pathway:</strong> use the freedom from resistance to political resistance for resource extraction awareness. // Purple: resistance // Grey: political resistance // Red: resource extraction<br>
+           <strong>Trajectory:</strong> This pathway represents a journey on an incline and then a decline, increasing in complexity and finishing with a release. It works through more difficult or negative states. This type of progression can be associated with narratives of increasing tension, confronting difficulties, or exploring deeper emotional complexities.<br>
+           The journey from 'brave' to 'apophantic' suggests a narrative arc that maintains positive qualities while transforming their expression or focus.<br>
+           <strong>Prompt:</strong> How can we expand the space we achieve from resistance and dedicate it back to our collection of more data?<br> <br>
+        </p>
+      </div>
+    </figure>
+
+    <figure class="fig">
+      <h3>precise</h3>
+      <img src="precise pathway.png" alt="precise">
+      <img src="epstein_precise.png" alt="epstein GNH precise">
+      <div class="cap">
+          <p>
+           <strong>Pathway:</strong> give openness from the social innovation to community. // Pink: social innovation // Black: community<br>
+           <strong>Trajectory:</strong> This pathway represents a flat journey, stable through its duration. This stability suggests a steady state or persistent emotional quality. Such pathways can represent enduring emotional states, established environments, or consistent character traits.<br>
+           The journey from 'ambitious' to 'swabble' suggests a narrative arc that navigates through different forms of challenge or complexity.<br>
+           <strong>Prompt:</strong> How can we specifically direct our new designs to the cracks that cause separation between differences?         
+        </p>
+      </div>
+    </figure>
+
+    
+    <figure class="fig">
+      <h3>feminine</h3>
+      <img src="fem pathway.png" alt="feminine">
+      <img src="epstein_feminine.png" alt="epstein GNH feminine">
+      <div class="cap">
+          <p>
+           <strong>Pathway:</strong> use social empowerment to resistance the pain of the localized change as a new social innovation. // Brown: social empowerment // Gold: resistance // Orange: localized change // Pink: social innovation<br>
+           <strong>Trajectory:</strong> This pathway maintains a relatively consistent emotional tone throughout. This stability suggests a steady state or persistent emotional quality. Such pathways can represent enduring emotional states, established environments, or consistent character traits.<br>
+           The journey from 'notable submissive' to 'ambitious' suggests a narrative arc that maintains positive qualities while transforming their expression or focus.<br>
+           <strong>Prompt:</strong> Where are our sources that charge our sovereignty and validate our identities in a network? How can we make ourselves more comfortable with the ontology of change and the avant garde?
+        </p>
+      </div>
+    </figure>
+
+    <figure class="fig">
+      <h3>masculine</h3>
+      <img src="masc pathway.png" alt="masculine">
+      <img src="epstein_masculine.png" alt="epstein GNH masculine">
+      <div class="cap">
+          <p>
+           <strong>Pathway:</strong> use awareness from the resource extraction to adaptation to address the pain from the localized change as a seed for a return. // Red: resource extraction // Blue: adaptation // Orange: localized change<br>
+           <strong>Trajectory:</strong> This pathway represents a journey of grounding and decline. This type of progression is associated with narratives of overcoming obstacles, personal growth, or resolution of conflicts.<br>
+           The journey from 'apophantic' to 'blurry artesian' suggests a narrative arc that maintains positive qualities while transforming their expression or focus.<br>
+           <strong>Prompt:</strong> What is the missing data around the people who have power over us? What changes or trends are developing from political resistance? How can we instill momentum and unity amongst differences and changes in our efforts?<br><br>
+        </p>
+      </div>
+    </figure>
+    
+    <figure class="fig">
+      <h3>direct</h3>
+      <img src="direct pathway.png" alt="direct">
+      <img src="epstein_direct.png" alt="epstein GNH direct">
+      <div class="cap">
+          <p>
+           <strong>Pathway:</strong> use gratitude from a return and inspiration from clarity to limit from resource extraction the pain from localized change. // Red: resource extraction // Orange: localized change<br>
+           <strong>Trajectory:</strong> This pathway represents a journey of steady degrowth. It proceeds towards more challenging or negative emotions from more positive states. This type of progression is often associated with narratives of overcoming obstacles, personal growth, or resolution of conflicts.<br>
+           The journey from 'apophantic' to 'blurry artesian' suggests a narrative arc that transforms the expression or focus.<br>
+           <strong>Prompt:</strong> How can the impact of our creations and innovations in design inform how we structure our resource networks?
+          </p>
+      </div>
+    </figure>
+  </section>
+  
+    <!-- Color Pathways -->
+  <section class="hero">
+    <figure class="fig">
+      <h3>Optimized Circuitry for Epstein's Color World</h3>
+      <img src="epstein_network.png" alt="network">
+      <div class="cap">
+          <table>
+          <tr>
+            <th></th>
+            <th>concept</th>
+            <th>optimal_network_score</th>
+            <th>eigenvector</th>
+            <th>closeness</th>
+            <th>betweenness</th>
+          </tr>
+          <tr>
+            <td>0</td>
+            <td>Nude - external validation</td>
+            <td>0.333333</td>
+            <td>0.126485</td>
+            <td>1.0</td>
+            <td>0.621212</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>Grey - political resistance</td>
+            <td>0.333333</td>
+            <td>0.334855</td>
+            <td>1.0</td>
+            <td>0.000000</td>
+          </tr>
+            <tr>
+            <td>2</td>
+            <td>Black - community</td>
+            <td>0.326421</td>
+            <td>0.330534</td>
+            <td>1.0</td>
+            <td>0.000000</td>
+          </tr>
+            <tr>
+            <td>3</td>
+            <td>Gold - resistance</td>
+            <td>0.320447</td>
+            <td>0.225155</td>
+            <td>1.0</td>
+            <td>0.303030</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Purple - resistance</td>
+            <td>0.296502</td>
+            <td>0.286420</td>
+            <td>1.0</td>
+            <td>0.075758</td>
+          </tr> 
+            <tr>
+            <td>5</td>
+            <td>Brown - social empowerment</td>
+            <td>0.283636</td>
+            <td>0.303789</td>
+            <td>1.0</td>
+            <td>0.000000</td>
+          </tr>
+            <tr>
+            <td>6</td>
+            <td>Pink - social innovation</td>
+            <td>0.279094</td>
+            <td>0.300949</td>
+            <td>1.0</td>
+            <td>0.000000</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>Green - transition</td>
+            <td>0.268507</td>
+            <td>0.294331</td>
+            <td>1.0</td>
+            <td>0.000000</td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>Blue - adaptation</td>
+            <td>0.268040</td>
+            <td>0.294039</td>
+            <td>1.0</td>
+            <td>0.000000</td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td>Yellow - public support</td>
+            <td>0.267851</td>
+            <td>0.293921</td>
+            <td>1.0</td>
+            <td>0.000000</td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td>White - free speech</td>
+            <td>0.236328</td>
+            <td>0.274216</td>
+            <td>1.0</td>
+            <td>0.000000</td>
+          </tr>
+          <tr>
+            <td>11</td>
+            <td>Orange - localized change</td>
+            <td>0.201126</td>
+            <td>0.252210</td>
+            <td>1.0</td>
+            <td>0.000000</td>
+          </tr>
+          <tr>
+            <td>12</td>
+            <td>Red - resource extraction</td>
+            <td>0.150862</td>
+            <td>0.220790</td>
+            <td>1.0</td>
+            <td>0.000000</td>
+          </tr>
+        </table>
+      </div>
+    </figure>
+  </section>
+  
+    
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="cta">
+      <a class="btn" href="https://chatgpt.com/g/g-686180b5d47c8191bdbb1922b79a2ebb-la-matriz-consulting-color-oracle">Open the Color Oracle</a>
+      <div class="meta">Consulting & research inquiries: <strong>danielle.gauthier@lamatriz.ai</strong> · <strong>lamatriz.ai</strong></div>
+    </div>
+    <div class="small" style="text-align:right">
+      © <span id="y"></span> La Matriz
+    </div>
+  </footer>
+
+</div>
+<script>document.getElementById('y').textContent=new Date().getFullYear();</script>
+</body>
+</html>

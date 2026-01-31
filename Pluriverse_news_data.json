@@ -1,0 +1,45 @@
+{
+  "identity": {
+    "name": "",
+    "organization": ""
+  },
+  
+  "intersection": {
+    "expression": "",
+    "body_experience": "",
+    "intention": ""
+  },
+    
+  "demographic": {
+    "race": "",
+    "gender": "",
+    "education": "",
+    "occupation": "",
+    "ability": "",
+    "wealth": "",
+    "health": ""
+  },
+    
+  "intention": {
+    "autonomy": "",
+    "design": "",
+    "future": "",
+    "new": "",
+    "symbol": "",
+    "impact": "",
+    "support": ""
+  },
+  
+  "policy_critique": {
+    "origin": "",
+    "leak": "",
+    "depletion": "",
+    "obstacles": ""
+  },
+  
+  "future": {
+    "ritual": "",
+    "hope": "",
+    "depict": ""
+  }
+}
